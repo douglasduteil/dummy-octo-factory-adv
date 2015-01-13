@@ -21,7 +21,7 @@ gulp hello
 # Run the tests
 gulp test
 # or the tests through the karma cli inside the `dummy-makina-karma`
-gulp karma --eArgv='start --single-run'
+gulp karma --eArgv='start node_modules/dummy-makina-hello-karma/karma.conf.js --single-run'
 ```
 
 ## TODO
@@ -29,8 +29,8 @@ gulp karma --eArgv='start --single-run'
 - A config object has to be passed to the *facto* then the *makinas*.
   A default configuration can be made, inspired by the [generator-ng-factory](https://github.com/ng-tools/generator-ng-factory)
   for example.
-- the `karma.conf.js` can easily be extracted from both projects.
-  Karma can read it from the makina.
+- ~~~the `karma.conf.js` can easily be extracted from both projects.
+  Karma can read it from the makina.~~~
 - A *qux* project can be added with another makina.
 - A common piping script can be use to unify the way basic makinas deal with
   well known process. Those scripts might be directly extracted/inspired by

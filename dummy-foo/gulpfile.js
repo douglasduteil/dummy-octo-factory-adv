@@ -13,5 +13,5 @@ facto.use(gulp);
 // gulp test
 // >>> runs karma start from a makina
 
-// gulp karma --eArgv='start --single-run'
+// gulp karma --eArgv='start node_modules/dummy-makina-hello-karma/karma.conf.js --single-run'
 // >>> runs karma from a makina

@@ -21,7 +21,7 @@ module.exports = function(gulp, argv){
   gulp.task(_mn + ':test', function(cb){
     karma.start({
       // TODO Add options to customize the path
-      configFile: path.resolve(process.cwd(),'karma.conf.js')
+      configFile: path.resolve(__dirname,'karma.conf.js')
     }, cb);
   });
 
