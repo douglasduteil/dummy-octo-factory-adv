@@ -2,7 +2,11 @@
 var facto = require('dummy-facto');
 var gulp = require('gulp');
 
-facto.use(gulp);
+var config = {
+  foo: 'bar'
+};
+
+facto.use(config);
 
 // gulp ng:install
 // >>> to install the makinas

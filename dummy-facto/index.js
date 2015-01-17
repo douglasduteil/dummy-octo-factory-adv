@@ -1,12 +1,20 @@
+'use strict';
+
 var npm = require("npm");
 var path = require("path");
+var extend = require("util")._extend;
 var resolve = require("resolve");
 var argv = require('yargs').argv;
+var gulp = require(resolve.sync('gulp', { basedir: process.cwd() }));
 
 var targetPkg = (function(){
   try{ return require(path.join(process.cwd(), 'package.json')); }
   catch (err) { return ''; }
 }());
+
+var defaults = {
+  src : { tmp : 'lol', views: 'views', cwd: 'cwd'}
+};
 
 module.exports = ngFacto;
 
@@ -14,10 +22,12 @@ module.exports = ngFacto;
 
 function ngFacto(){}
 
-ngFacto.use = function(gulp){
+ngFacto.use = function(_config){
   if (!(targetPkg && targetPkg.ngFacto)){
     return;
   }
+
+  var config = extend(defaults, _config);
 
   ////
   // Require all available makinas
@@ -38,34 +48,33 @@ ngFacto.use = function(gulp){
       return !!makinaPath;
     })
     .map(function requireMakina(makinaPath){
-      require(makinaPath)(gulp, endingArgv);
+      require(makinaPath)(config, endingArgv);
     });
 
-
-  ////
-  // The install task.
-  // Will install all the described "makinasVersions" form the package.json
-  // under the meta-key "ngFacto"
-
-  gulp.task('ng:install', function(cb){
-
-    npm.load(null, function(er){
-      if (er) return cb(er);
-
-      var makinasVersions = Object
-        .keys(targetPkg.ngFacto.makinas)
-        .map(function(makinaName){
-          return makinaName + '@' + targetPkg.ngFacto.makinas[makinaName];
-        });
-
-      npm.commands.install(makinasVersions,
-        function(er){
-          if (er) return cb(er);
-          cb();
-        }
-      );
-
-    });
-
-  })
 };
+
+////
+// The install task.
+// Will install all the described "makinasVersions" form the package.json
+// under the meta-key "ngFacto"
+
+gulp.task('ng:install', function(cb){
+
+  npm.load(null, function(er){
+    if (er) return cb(er);
+
+    var makinasVersions = Object
+      .keys(targetPkg.ngFacto.makinas)
+      .map(function(makinaName){
+        return makinaName + '@' + targetPkg.ngFacto.makinas[makinaName];
+      });
+
+    npm.commands.install(makinasVersions,
+      function(er){
+        if (er) return cb(er);
+        cb();
+      }
+    );
+
+  });
+})
