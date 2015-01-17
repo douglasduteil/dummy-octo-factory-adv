@@ -13,7 +13,16 @@ var targetPkg = (function(){
 }());
 
 var defaults = {
-  src : { tmp : 'lol', views: 'views', cwd: 'cwd'}
+  src : {
+    cwd: 'src',
+    tmp : '.tmp',
+    scripts: '{scripts,modules/*}/**/*.js'
+  },
+  scriptBaseProcess : {
+    pattern: false,
+    transform: function fakeTransformer(){ return {}; },
+    transformOptions: null
+  }
 };
 
 module.exports = ngFacto;

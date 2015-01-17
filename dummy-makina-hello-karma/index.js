@@ -24,16 +24,17 @@ gulp.task('karma', [_mn + ':karma']);
 gulp.task('test', [_mn + ':test']);
 gulp.task('hello', [_mn + ':hello']);
 
-gulp.task('ng:src/views', [_mn + ':src/views']);
+gulp.task('ng:src/scripts', [_mn + ':src/scripts']);
 
 ////
 
-gulp.task(_mn + ':src/views', function(){
+gulp.task(_mn + ':src/scripts', function(){
 
   var src = config.src;
 
-  return gulp.src(src.views, {cwd: src.cwd, base: src.cwd})
-    .pipe(channels.views.src())
+  return gulp.src(src.scripts, { cwd: src.cwd, base: src.cwd })
+    .pipe(channels.scripts.src())
+  ;
 });
 
 gulp.task(_mn + ':hello', function(){

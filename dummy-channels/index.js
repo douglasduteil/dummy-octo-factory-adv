@@ -15,22 +15,42 @@ channels.use = function(_config){
 
 // Dummy sample emulating folder with objects.
 
-channels.views = {
-  src : viewsSrcChannel
+channels.scripts = {
+  base: scriptBaseChannel,
+  src : scriptSrcChannel
 }
 
 ////
 
-var identiy = through2.obj()
+var identiy = through2.obj();
 
-// View
+// Scripts Base
+// ============
 
-function viewsSrcChannel(src, preprocess){
+var rename = require('gulp-rename');
+var gulpif = require('gulp-if');
+
+function scriptBaseChannel(){
+  var process = config.scriptBaseProcess;
+  return combine(
+    gulpif(process.pattern, process.transform(process.transformOptions)),
+    gulpif(process.pattern, rename(function(path) { path.extname = '.js'; }))
+  );
+}
+
+// Scripts Src
+// ===========
+
+var sourcemaps = require('gulp-sourcemaps');
+
+function scriptSrcChannel(src, preprocess){
   preprocess = preprocess || identiy;
   src = src || config.src;
 
   return combine(
-    preprocess,
+    sourcemaps.init(),
+    scriptBaseChannel(),
+    sourcemaps.write(),
     gulp.dest(src.tmp)
   );
 }
