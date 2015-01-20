@@ -1,0 +1,9 @@
+{
+  "name": "dummy-makina-inner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "gulp-less": "^2.0.1",
+    "resolve": "^1.0.0"
+  }
+}

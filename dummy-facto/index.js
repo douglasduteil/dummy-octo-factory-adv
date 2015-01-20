@@ -13,6 +13,9 @@ var targetPkg = (function(){
 }());
 
 var defaults = {
+  factory:{
+    makinaPrefixRegex: /^dummy-makina/
+  },
   src : {
     cwd: 'src',
     tmp : '.tmp',
@@ -32,9 +35,6 @@ module.exports = ngFacto;
 function ngFacto(){}
 
 ngFacto.use = function(_config){
-  if (!(targetPkg && targetPkg.ngFacto)){
-    return;
-  }
 
   var config = extend(defaults, _config);
 
@@ -46,8 +46,25 @@ ngFacto.use = function(_config){
   // Note: by convention argv is an array, so is eArgv.
   var endingArgv = (argv.eArgv ||  '').split(' ');
 
+  var makinas = {};
+  var extractedMakinaFromDevDependencies = Object
+    .keys(targetPkg.devDependencies || {})
+    .filter(function(depName){
+      return config.factory.makinaPrefixRegex.test(depName);
+    })
+    .reduce(function rebuildObject(memo, depName){
+      memo[depName] = targetPkg.devDependencies[depName];
+      return memo;
+    }, {});
+
+  // Low the matched devDependencies first
+  makinas = extend(makinas, extractedMakinaFromDevDependencies);
+  // But priority to the ngFacto meta key
+  makinas = extend(makinas, targetPkg.ngFacto && targetPkg.ngFacto.makinas);
+
+
   Object
-    .keys(targetPkg.ngFacto.makinas || {})
+    .keys(makinas || {})
     .map(function toMakinaPath(makinaName){
       try { return resolve.sync(makinaName, { basedir: process.cwd() });}
       catch (err) { return ''; }
@@ -86,4 +103,4 @@ gulp.task('ng:install', function(cb){
     );
 
   });
-})
+});

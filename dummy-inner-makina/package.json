@@ -1,0 +1,16 @@
+{
+  "name": "dummy-inner-makina",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dummy-facto": "../dummy-facto",
+    "gulp": "^3.8.10",
+    "dummy-makina-inner": ".ng-factory/dummy-makina-inner"
+  }
+}
