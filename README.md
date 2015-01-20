@@ -26,12 +26,13 @@ gulp karma --eArgv='start node_modules/dummy-makina-hello-karma/karma.conf.js --
 
 ## TODO
 
-- A config object has to be passed to the *facto* then the *makinas*.
+- ~~A config object has to be passed to the *facto* then the *makinas*.
   A default configuration can be made, inspired by the [generator-ng-factory](https://github.com/ng-tools/generator-ng-factory)
-  for example.
+  for example.~~
 - ~~~the `karma.conf.js` can easily be extracted from both projects.
   Karma can read it from the makina.~~~
 - A *qux* project can be added with another makina.
-- A common piping script can be use to unify the way basic makinas deal with
+- ~~A common piping script can be use to unify the way basic makinas deal with
   well known process. Those scripts might be directly extracted/inspired by
-  [gulp-ng-channels](https://github.com/ng-tools/gulp-ng-channels)
+  [gulp-ng-channels](https://github.com/ng-tools/gulp-ng-channels)~~
+- ~~Can load makinas from the devDependencies~~
